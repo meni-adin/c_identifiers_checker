@@ -52,6 +52,15 @@ def parse_arguments():
         default=standard_default,
         help=f"The Standard to check for. Default is '{standard_default}'"
     )
+    parser.add_argument(
+        '-h',
+        '--help',
+        # action='store',
+        # choices=standard_choices,
+        # default=standard_default,
+        # help=f"The Standard to check for. Default is '{standard_default}'"
+    )
+    help = "1. this utility also warns of identifiers that are only used in pragmas."
     args = parser.parse_args()
     return args
 
@@ -92,11 +101,6 @@ def load_from_json(json_file_path):
 def is_in_use(standard, identifier):
     in_use_dict = load_from_json(os.path.join(standard_dir_path(standard), IN_USE_FILE_NAME))
 
-    # if identifier in in_use_dict:
-    #     print(f'The identifier {identifier} is in use by the standard-library:')
-    #     print(f'Reference: {SHORT_STANDARD_TO_FULL_NAME_MAP[standard]}, §{in_use_dict[identifier]}')
-    #     return True
-    # return False
     for pattern in in_use_dict:
         if re.fullmatch(pattern, identifier):
             print(f'The identifier {identifier} is in use by the standard-library:')
