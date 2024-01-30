@@ -53,14 +53,14 @@ def parse_arguments():
         help=f"The Standard to check for. Default is '{standard_default}'"
     )
     parser.add_argument(
-        '-h',
-        '--help',
-        # action='store',
-        # choices=standard_choices,
-        # default=standard_default,
-        # help=f"The Standard to check for. Default is '{standard_default}'"
+        '-e',
+        '--explain',
+        action='store_true',
+        default=False,
+        help="Show help message"
     )
-    help = "1. this utility also warns of identifiers that are only used in pragmas."
+    help = "1. this utility also warns of identifiers that are only used in pragmas.\
+    2. PRIdN family macros treated as used though they presence depends on the architecture."
     args = parser.parse_args()
     return args
 
