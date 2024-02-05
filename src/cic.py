@@ -27,7 +27,9 @@ SHORT_STANDARD_TO_FULL_NAME_MAP = {
 
 def run():
     args = parse_arguments()
-    print(f'Checking the identifier {args.identifier}')
+    if(args.explain):
+        print_explanation()
+        return
     check(args)
 
 def parse_arguments():
@@ -39,8 +41,8 @@ def parse_arguments():
         '-i',
         '--identifier',
         action='store',
-        help="The identifier to check",
-        required=True
+        default="",
+        help="The identifier to check"
     )
     standard_choices = [STANDARD_ALL] + STANDARDS
     standard_default = standard_choices[0]
@@ -59,12 +61,12 @@ def parse_arguments():
         default=False,
         help="Show help message"
     )
-    help = "1. this utility also warns of identifiers that are only used in pragmas.\
-    2. PRIdN family macros treated as used though they presence depends on the architecture."
+
     args = parser.parse_args()
     return args
 
 def check(args):
+    print(f'Checking the identifier {args.identifier}')
     if not is_valid_c_identifier(args.identifier):
         return
     if args.standard == STANDARD_ALL:
@@ -126,6 +128,14 @@ def is_reserved(standard, identifier):
             print(f'Reference: {SHORT_STANDARD_TO_FULL_NAME_MAP[standard]}, §{reserved_dict[pattern]}')
             return True
     return False
+
+def print_explanation():
+    lines = []
+    lines.append('1. this utility also warns of identifiers that are only used in pragmas.')
+    lines.append('2. PRIdN family macros treated as used though they presence depends on the architecture.')
+    lines.append('3. The distinction between "used by the library" and "reserved" is not very clear, since some identifier are optional but defined in most implementations.')
+    for line in lines:
+        print(line)
 
 if __name__ == "__main__":
     run()
