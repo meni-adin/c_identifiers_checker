@@ -6,7 +6,6 @@ import json
 import os
 import pathlib
 import re
-import sys
 
 CURRENT_FILE_NAME = os.path.basename(__file__)
 WORKING_DIR = pathlib.Path(__file__).parent.resolve()
@@ -180,8 +179,6 @@ def check_in_file(standard, file_name, identifier):
         exit_error('Unknown list_type')
 
     return False
-
-
 
 if __name__ == "__main__":
     run()
